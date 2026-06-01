@@ -41,7 +41,8 @@ namespace KE03_INTDEV_SE_2_Base
 
                 var context = services.GetRequiredService<MatrixIncDbContext>();
                 context.Database.EnsureCreated();
-                MatrixIncDbInitializer.Initialize(context);
+                //Initializer uitgecommentarieerd, omdat die niet meer nodig is. -Jonah
+                //MatrixIncDbInitializer.Initialize(context);
             }
 
             app.UseHttpsRedirection();

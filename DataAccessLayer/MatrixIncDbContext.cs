@@ -13,22 +13,27 @@ namespace DataAccessLayer
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Part> Parts { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<Inventory> Inventories { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customer>()
-                .HasMany(c => c.Orders)
-                .WithOne(o => o.Customer)
-                .HasForeignKey(o => o.CustomerId).IsRequired();
-
-            //modelBuilder.Entity<Order>()
-            //    .HasOne(o => o.Customer)
-            //    .WithMany(c => c.Orders)
-            //    .OnDelete(DeleteBehavior.Restrict);
-
+            //Aangepast door Jonah
             modelBuilder.Entity<Product>()
-                .HasMany(p => p.Orders)
-                .WithMany(o => o.Products);
+            .HasOne(p => p.Inventory)
+            .WithOne(i => i.Product)
+            .HasForeignKey<Inventory>(i => i.ProductId);
+
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(oi => oi.Order)
+                .WithMany(o => o.OrderItems)
+                .HasForeignKey(oi => oi.OrderId);
+
+            modelBuilder.Entity<OrderItem>()
+                .HasOne(oi => oi.Product)
+                .WithMany()
+                .HasForeignKey(oi => oi.ProductId);
 
             modelBuilder.Entity<Part>()
                 .HasMany(p => p.Products)
