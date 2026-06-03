@@ -1,47 +1,135 @@
 ﻿@model IEnumerable<DataAccessLayer.Models.Customer>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Customers";
 }
 
-<h1>Index</h1>
+<div class="customer-container">
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Active)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Active)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+    <div class="toolbar">
+
+        <div class="search-filter-group">
+
+            <div class="search-container">
+
+                <input type="text"
+                       id="searchInput"
+                       class="search-box"
+                       placeholder="Search customers..." />
+
+                <button type="button"
+                        id="clearSearch"
+                        class="clear-search-btn">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+
+            </div>
+
+            <div class="filter-wrapper">
+
+                <button type="button"
+                id="filterToggle"
+                class="filter-btn">
+                <i class="bi bi-funnel-fill"></i>
+                Filter
+                </button>
+
+                <button type="button"
+                        id="clearFilter"
+                        class="clear-filter-btn">
+                    <i class="bi bi-x-circle"></i>
+                    Clear
+                </button>
+
+                <div id="filterPanel" class="filter-panel">
+
+                    <label>Category</label>
+
+                    <select id="filterColumn" class="filter-select">
+                        <option value="">Choose Category</option>
+                        <option value="0">ID</option>
+                        <option value="1">Email</option>
+                        <option value="2">First Name</option>
+                        <option value="3">Last Name</option>
+                        <option value="4">Address</option>
+                        <option value="5">Postcode</option>
+                        <option value="6">City</option>
+                    </select>
+
+                    <label>Value</label>
+
+                    <select id="filterValue" class="filter-select">
+                        <option value="">All</option>
+                    </select>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <a asp-action="Create" class="create-btn">
+            <i class="bi bi-plus-lg"></i>
+        </a>
+
+    </div>
+
+    <table class="table customer-table" id="customerTable">
+
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Email</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Address</th>
+                <th>Postcode</th>
+                <th>City</th>
+                <th class="actions-column">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in Model)
+            {
+                <tr class="customer-row"
+                    data-url="@Url.Action("Details", new { id = item.Id })">
+
+                    <th>@item.Id</th>
+                    <td>@item.Email</td>
+                    <td>@item.FirstName</td>
+                    <td>@item.LastName</td>
+                    <td>@item.Address</td>
+                    <td>@item.Postcode</td>
+                    <td>@item.City</td>
+
+                    <td class="action-buttons">
+
+                        <a asp-action="Edit"
+                           asp-route-id="@item.Id"
+                           class="icon-btn edit-btn">
+
+                            <i class="bi bi-pencil-fill"></i>
+                        </a>
+
+                        <a asp-action="Delete"
+                           asp-route-id="@item.Id"
+                           class="icon-btn delete-btn">
+
+                            <i class="bi bi-trash-fill"></i>
+                        </a>
+
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>
+
+@section Scripts {
+    <script src="~/js/customer-index.js"></script>
 }
-    </tbody>
-</table>

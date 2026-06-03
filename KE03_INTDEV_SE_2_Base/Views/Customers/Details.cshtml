@@ -11,10 +11,22 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Email)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Address)
@@ -23,10 +35,16 @@
             @Html.DisplayFor(model => model.Address)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Active)
+            @Html.DisplayNameFor(model => model.Postcode)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Active)
+            @Html.DisplayFor(model => model.Postcode)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.City)
         </dd>
     </dl>
 </div>
@@ -34,3 +52,43 @@
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+
+<hr />
+
+<h3>Order History</h3>
+
+<div class="order-history-placeholder">
+
+    <i class="bi bi-receipt"></i>
+
+    <p>
+        Order functionality is currently under development.
+    </p>
+
+    <small>
+        Orders linked to this customer will appear here.
+    </small>
+
+</div>
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">
+        Back to Customers
+    </a>
+</div>
+
+
+<!--  Indien orders werkend zijn:
+    
+
+@if (Model.Orders.Any())
+{
+    // Show orders table
+}
+else
+{
+    // Show "No orders found"
+}
+
+-->

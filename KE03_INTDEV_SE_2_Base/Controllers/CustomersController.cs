@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using DataAccessLayer;
 using DataAccessLayer.Models;
 
-namespace KE03_INTDEV_SE_2_Base
+namespace KE03_INTDEV_SE_2_Base.Controllers
 {
     public class CustomersController : Controller
     {
@@ -54,7 +54,7 @@ namespace KE03_INTDEV_SE_2_Base
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Address,Active")] Customer customer)
+        public async Task<IActionResult> Create([Bind("Id,Email,FirstName,LastName,Address,Postcode,City")] Customer customer)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace KE03_INTDEV_SE_2_Base
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,Active")] Customer customer)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,FirstName,LastName,Address,Postcode,City")] Customer customer)
         {
             if (id != customer.Id)
             {
