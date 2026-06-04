@@ -4,87 +4,88 @@
     ViewData["Title"] = "Categorieën";
 }
 
-<div class="card">
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">
+        Categorieën
+        <span class="badge bg-secondary">@Model.Count()</span>
+    </h1>
+
+    <a asp-action="Create" class="btn btn-success">
+        +
+    </a>
+</div>
+
+<div class="card mb-3">
     <div class="card-body">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h4 mb-0">
-                Categorieën
-                <span class="badge bg-secondary">@Model.Count()</span>
-            </h1>
-
-            <a asp-action="Create" class="btn btn-dark">
-                + Nieuwe categorie
-            </a>
-        </div>
-
-        <div class="mb-3">
-            <input type="text"
-                   id="categorySearch"
-                   class="form-control"
-                   placeholder="Zoek op categorienaam..." />
-        </div>
-
-        @if (!Model.Any())
-        {
-            <div class="alert alert-info mb-0">
-                Er zijn nog geen categorieën toegevoegd.
+        <div class="row g-2">
+            <div class="col-md-12">
+                <input type="text"
+                       id="categorySearch"
+                       class="form-control"
+                       placeholder="Zoek op categorienaam..." />
             </div>
-        }
-        else
-        {
-            <table id="categorieenTabel" class="table table-hover align-middle mb-0">
-                <thead class="table-light">
-                    <tr>
-                        <th>Categorie</th>
-                        <th>Categorienummer</th>
-                        <th>Aantal producten</th>
-                        <th class="text-end">Acties</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <td>
-                                <strong>
-                                    <a asp-action="Details"
-                                       asp-route-id="@item.Id"
-                                       class="text-dark text-black text-decoration-none">
-                                        @item.Name
-
-                                    </a>
-                                </strong>
-                            </td>
-
-                            <td>
-                                CAT-@item.Id.ToString("D3")
-                            </td>
-
-                            <td>
-                                <span class="badge bg-light text-dark border">
-                                    @(item.Products?.Count ?? 0)
-                                </span>
-                            </td>
-
-                            <td class="text-end">
-                                <a asp-action="Edit"
-                                   asp-route-id="@item.Id"
-                                   class="btn text-primary"
-                                   title="Bewerken">
-                                    <i class="bi bi-pencil-square fs-5"></i>
-                                </a>
-
-                                <a asp-action="Delete"
-                                   asp-route-id="@item.Id"
-                                   class="btn text-danger"
-                                   title="Verwijderen">
-                                    <i class="bi bi-trash-fill fs-5"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
+        </div>
     </div>
 </div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        Er zijn nog geen categorieën toegevoegd.
+    </div>
+}
+else
+{
+    <table id="categorieenTabel" class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Categorie</th>
+                <th>Categorienummer</th>
+                <th>Aantal producten</th>
+                <th class="text-end">Acties</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <strong>
+                            <a asp-action="Details"
+                               asp-route-id="@item.Id"
+                               class="text-dark text-black text-decoration-none">
+                                @item.Name
+                            </a>
+                        </strong>
+                    </td>
+
+                    <td>
+                        CAT-@item.Id.ToString("D3")
+                    </td>
+
+                    <td>
+                        <span class="badge bg-light text-dark border">
+                            @(item.Products?.Count ?? 0)
+                        </span>
+                    </td>
+
+                    <td class="text-end">
+                        <a asp-action="Edit"
+                           asp-route-id="@item.Id"
+                           class="btn text-primary"
+                           title="Bewerken">
+                            <i class="bi bi-pencil-square fs-5"></i>
+                        </a>
+
+                        <a asp-action="Delete"
+                           asp-route-id="@item.Id"
+                           class="btn text-danger"
+                           title="Verwijderen">
+                            <i class="bi bi-trash-fill fs-5"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -124,8 +124,19 @@ else
                     </td>
 
                     <td class="text-end">
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning">Bewerken</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Verwijderen</a>
+                        <a asp-action="Edit"
+                           asp-route-id="@item.Id"
+                           class="btn text-primary"
+                           title="Bewerken">
+                            <i class="bi bi-pencil-square fs-5"></i>
+                        </a>
+
+                        <a asp-action="Delete"
+                           asp-route-id="@item.Id"
+                           class="btn text-danger"
+                           title="Verwijderen">
+                            <i class="bi bi-trash-fill fs-5"></i>
+                        </a>
                     </td>
                 </tr>
             }
