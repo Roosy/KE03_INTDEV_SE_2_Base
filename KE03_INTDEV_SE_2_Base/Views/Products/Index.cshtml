@@ -1,53 +1,136 @@
 ﻿@model IEnumerable<DataAccessLayer.Models.Product>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Producten";
+
+    var categories = Model
+        .Select(p => p.ProductCategory?.Name)
+        .Where(name => !string.IsNullOrWhiteSpace(name))
+        .Distinct()
+        .OrderBy(name => name);
 }
 
-<h1>Producten - Index</h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">
+        Producten
+        <span class="badge bg-secondary">@Model.Count()</span>
+    </h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductCategory)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductCategory.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+    <a asp-action="Create" class="btn btn-dark">
+        + Nieuw product
+    </a>
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="row g-2">
+            <div class="col-md-6">
+                <input type="text"
+                       id="productSearch"
+                       class="form-control"
+                       placeholder="Zoek producten..." />
+            </div>
+
+            <div class="col-md-3">
+                <select id="categoryFilter" class="form-select">
+                    <option value="">Alle categorieën</option>
+                    @foreach (var category in categories)
+                    {
+                        <option value="@category">@category</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <select id="sortFilter" class="form-select">
+                    <option value="">Sorteer op</option>
+                    <option value="az">Naam A-Z</option>
+                    <option value="za">Naam Z-A</option>
+                    <option value="price-low">Prijs laag-hoog</option>
+                    <option value="price-high">Prijs hoog-laag</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        Er zijn nog geen producten toegevoegd.
+    </div>
 }
-    </tbody>
-</table>
+else
+{
+    <table id="productenTabel" class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Item</th>
+                <th>Product</th>
+                <th>Categorie</th>
+                <th>Prijs</th>
+                <th>Aantal</th>
+                <th>Status</th>
+                <th class="text-end">Acties</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                var aantal = item.Inventory?.Quantity ?? 0;
+                var status = aantal <= 0 ? "Niet op voorraad" : aantal < 10 ? "Lage voorraad" : "Op voorraad";
+                var categoryName = item.ProductCategory?.Name ?? "Geen categorie";
+
+                <tr data-category="@categoryName" data-name="@item.Name" data-price="@item.Price">
+                    <td>@item.Id</td>
+
+                    <td>
+                        <strong>
+                            <a asp-action="Details"
+                               asp-route-id="@item.Id"
+                               class="text-dark text-black text-decoration-none">
+                                @item.Name
+                            
+                            </a>
+                        
+                        </strong>
+                        <br />
+                        <small class="text-muted">@(item.Description ?? "Geen beschrijving")</small>
+                    </td>
+
+                    <td>
+                        <span class="badge bg-light text-dark border">@categoryName</span>
+                    </td>
+
+                    <td>@item.Price.ToString("€ 0.00")</td>
+
+                    <td>
+                        <span class="badge bg-success-subtle text-success border">@aantal</span>
+                    </td>
+
+                    <td>
+                        @if (status == "Niet op voorraad")
+                        {
+                            <span class="badge bg-danger">@status</span>
+                        }
+                        else if (status == "Lage voorraad")
+                        {
+                            <span class="badge bg-warning text-dark">@status</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success">@status</span>
+                        }
+                    </td>
+
+                    <td class="text-end">
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Details</a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning">Bewerken</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Verwijderen</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+      
