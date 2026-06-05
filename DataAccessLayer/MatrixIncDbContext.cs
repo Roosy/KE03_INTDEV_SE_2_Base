@@ -21,6 +21,10 @@ namespace DataAccessLayer
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Aangepast door Jonah
+            modelBuilder.Entity<Customer>()
+            .HasMany(c => c.Orders)
+            .WithOne(o => o.Customer);
+
             modelBuilder.Entity<Product>()
             .HasOne(p => p.Inventory)
             .WithOne(i => i.Product)
