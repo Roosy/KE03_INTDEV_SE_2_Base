@@ -129,79 +129,80 @@ document.addEventListener("DOMContentLoaded", () => {
     populateFilterValues();
 
 
-    
+    const clearFilter =
+        document.getElementById("clearFilter");
 
+    clearFilter?.addEventListener("click", () => {
 
-});
+        filterColumn.value = "";
 
+        filterValue.innerHTML =
+            '<option value="">All</option>';
 
-const clearFilter =
-    document.getElementById("clearFilter");
+        filterPanel?.classList.remove("show");
 
-clearFilter?.addEventListener("click", () => {
-
-    filterColumn.value = "";
-
-    filterValue.innerHTML =
-        '<option value="">All</option>';
-
-    filterPanel?.classList.remove("show");
-
-    filterTable();
-});
-
-function updateClearButton() {
-
-    const hasFilter =
-        filterColumn.value !== "" ||
-        filterValue.value !== "";
-
-    clearFilter.style.display =
-        hasFilter ? "block" : "none";
-}
-
-
-document.querySelectorAll(".customer-row")
-    .forEach(row => {
-
-        row.addEventListener("click", () => {
-
-            window.location.href =
-                row.dataset.url;
-        });
-
+        filterTable();
     });
 
-document.querySelectorAll(".edit-btn, .delete-btn")
-    .forEach(button => {
 
-        button.addEventListener("click", (e) => {
+    // Show or hide the clear filter button based on whether a filter is applied
+    function updateClearButton() {
 
-            e.stopPropagation();
+        const hasFilter =
+            filterColumn.value !== "" ||
+            filterValue.value !== "";
+
+        clearFilter.style.display =
+            hasFilter ? "block" : "none";
+    }
+
+
+    document.querySelectorAll(".customer-row")
+        .forEach(row => {
+
+            row.addEventListener("click", () => {
+
+                window.location.href =
+                    row.dataset.url;
+            });
+
         });
 
+    document.querySelectorAll(".edit-btn, .delete-btn")
+        .forEach(button => {
+
+            button.addEventListener("click", (e) => {
+
+                e.stopPropagation();
+            });
+
+        });
+
+    const clearSearch =
+        document.getElementById("clearSearch");
+
+    searchInput.addEventListener("input", () => {
+
+        clearSearch.style.display =
+            searchInput.value.trim()
+                ? "block"
+                : "none";
+
+        filterTable();
     });
 
-const clearSearch =
-    document.getElementById("clearSearch");
+    clearSearch?.addEventListener("click", () => {
 
-searchInput.addEventListener("input", () => {
+        searchInput.value = "";
 
-    clearSearch.style.display =
-        searchInput.value.trim()
-            ? "block"
-            : "none";
+        clearSearch.style.display = "none";
 
-    filterTable();
+        filterTable();
+
+        searchInput.focus();
+    });
 });
 
-clearSearch?.addEventListener("click", () => {
 
-    searchInput.value = "";
 
-    clearSearch.style.display = "none";
 
-    filterTable();
-
-    searchInput.focus();
-});

@@ -54,16 +54,25 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Email,FirstName,LastName,Address,Postcode,City")] Customer customer)
+        public async Task<IActionResult> Create([Bind("CustomerId, Email,FirstName,LastName,Address,Postcode,City")] Customer customer)
         {
+
             if (ModelState.IsValid)
             {
-                _context.Add(customer);
+                var nextCustomerId = (_context.Customers.Max(c => (int?)c.CustomerId) ?? 0) + 1;
+
+                customer.CustomerId = nextCustomerId;
+
+                _context.Customers.Add(customer);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             return View(customer);
         }
+
+
+
+
 
         // GET: Customers/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -86,7 +95,7 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,FirstName,LastName,Address,Postcode,City")] Customer customer)
+        public async Task<IActionResult> Edit(int id, [Bind("CustomerId, Email,FirstName,LastName,Address,Postcode,City")] Customer customer)
         {
             if (id != customer.Id)
             {

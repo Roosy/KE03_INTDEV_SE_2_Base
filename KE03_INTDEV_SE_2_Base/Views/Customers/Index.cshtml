@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<DataAccessLayer.Models.Customer>
-
 @{
     ViewData["Title"] = "Customers";
 }
@@ -10,6 +9,7 @@
 
         <div class="search-filter-group">
 
+            <!-- Zoekbalk -->
             <div class="search-container">
 
                 <input type="text"
@@ -25,6 +25,7 @@
 
             </div>
 
+            <!-- Filter code -->
             <div class="filter-wrapper">
 
                 <button type="button"
@@ -43,11 +44,11 @@
 
                 <div id="filterPanel" class="filter-panel">
 
-                    <label>Category</label>
+                    <label>Categorie</label>
 
                     <select id="filterColumn" class="filter-select">
                         <option value="">Choose Category</option>
-                        <option value="0">ID</option>
+                        <option value="0">CustomerID</option>
                         <option value="1">Email</option>
                         <option value="2">First Name</option>
                         <option value="3">Last Name</option>
@@ -56,10 +57,10 @@
                         <option value="6">City</option>
                     </select>
 
-                    <label>Value</label>
+                    <label>Waarde</label>
 
                     <select id="filterValue" class="filter-select">
-                        <option value="">All</option>
+                        <option value="">Alles</option>
                     </select>
 
                 </div>
@@ -78,14 +79,14 @@
 
         <thead>
             <tr>
-                <th>Id</th>
+                <th>CustomerId</th>
                 <th>Email</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Address</th>
                 <th>Postcode</th>
                 <th>City</th>
-                <th class="actions-column">Actions</th>
+                <th class="actions-column"></th>
             </tr>
         </thead>
 
@@ -96,7 +97,7 @@
                 <tr class="customer-row"
                     data-url="@Url.Action("Details", new { id = item.Id })">
 
-                    <th>@item.Id</th>
+                    <th>@item.CustomerId.ToString("D5")</th>
                     <td>@item.Email</td>
                     <td>@item.FirstName</td>
                     <td>@item.LastName</td>
