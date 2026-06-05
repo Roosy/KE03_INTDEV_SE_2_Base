@@ -37,4 +37,4 @@ namespace DataAccessLayer.Models
         public ICollection<Product> Products { get; } = new List<Product>();
         */
     }
-}
+} 
