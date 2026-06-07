@@ -58,8 +58,8 @@ else
                         <strong>
                             <a asp-action="Details"
                                asp-route-id="@order.Id"
-                               class="text-dark text-black text-decoration-none">
-                                @order.Customer
+                               class="text-dark text-decoration-none">
+                                @order.Customer.FirstName @order.Customer.LastName
                             </a>
                         </strong>
                     </td>

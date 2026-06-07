@@ -10,30 +10,49 @@
     <h4>Bestelling</h4>
     <hr />
     <dl class="row">
+
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Customer)
+            Klant
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Customer)
+            <strong>@Model.Customer.FirstName @Model.Customer.LastName</strong><br />
+            @Model.Customer.Email<br />
+            @Model.Customer.Address, @Model.Customer.Postcode @Model.Customer.City
         </dd>
+
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.OrderDate)
+            Besteldatum
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.OrderDate)
+            @Model.OrderDate.ToString("dd-MM-yyyy HH:mm")
         </dd>
+
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TotalAmount)
+            Totaalbedrag
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TotalAmount)
+            € @Model.TotalAmount.ToString("0.00")
         </dd>
+
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.OrderItems)
+            Orderitems
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.OrderItems)
+            @if (Model.OrderItems != null && Model.OrderItems.Any())
+            {
+                <ul>
+                    @foreach (var item in Model.OrderItems)
+                    {
+                        <li>OrderItem #@item.Id</li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <span>Geen orderitems gekoppeld.</span>
+            }
         </dd>
+
     </dl>
 </div>
 <div>

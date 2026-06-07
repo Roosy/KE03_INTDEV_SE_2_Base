@@ -13,19 +13,20 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="OrderDate" />
-            <div class="form-group">
-                <label asp-for="Customer" class="control-label"></label>
-                <input asp-for="Customer" class="form-control" />
-                <span asp-validation-for="Customer" class="text-danger"></span>
+            <div class="form-group mb-3">
+                <label class="control-label">Klant</label>
+                <select name="customerId" class="form-control" asp-items="ViewBag.Customers">
+                    <option value="">-- Kies een klant --</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="TotalAmount" class="control-label"></label>
                 <input asp-for="TotalAmount" class="form-control" />
                 <span asp-validation-for="TotalAmount" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="OrderItems" class="control-label"></label>
-                <select asp-for="OrderItems" class="form-control" asp-items="ViewBag.OrderItems"></select>
+            <div class="form-group mb-3">
+                <label class="control-label">Order items</label>
+                <select name="orderItemIds" class="form-control" asp-items="ViewBag.OrderItems" multiple></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
