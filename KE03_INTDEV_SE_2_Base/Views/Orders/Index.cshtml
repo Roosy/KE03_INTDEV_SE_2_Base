@@ -4,38 +4,83 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">
+        Bestellingen
+        <span class="badge bg-secondary">@Model.Count()</span>
+    </h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.OrderDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TotalAmount)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalAmount)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+    <a asp-action="Create" class="btn btn-success">
+        +
+    </a>
+</div>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <div class="row g-2">
+            <div class="col-md-6">
+                <input type="text"
+                       id="orderSearch"
+                       class="form-control"
+                       placeholder="Zoek bestellingen..." />
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        Er zijn nog geen bestellingen toegevoegd.
+    </div>
 }
-    </tbody>
-</table>
+else
+{
+    <table id="bestellingenTabel" class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th>Bestelling ID</th>
+                <th>Datum Bestelling</th>
+                <th>Klant</th>
+                <th class="text-end">Acties</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+
+                <tr data-name="@order.Id">
+                    <td>@order.Id</td>
+
+                    <td>@order.OrderDate</td>
+
+                    <td>
+                        <strong>
+                            <a asp-action="Details"
+                               asp-route-id="@order.Id"
+                               class="text-dark text-black text-decoration-none">
+                                @order.Customer
+                            </a>
+                        </strong>
+                    </td>
+
+                    <td class="text-end">
+                        <a asp-action="Edit"
+                           asp-route-id="@order.Id"
+                           class="btn text-primary"
+                           title="Bewerken">
+                            <i class="bi bi-pencil-square fs-5"></i>
+                        </a>
+
+                        <a asp-action="Delete"
+                           asp-route-id="@order.Id"
+                           class="btn text-danger"
+                           title="Verwijderen">
+                            <i class="bi bi-trash-fill fs-5"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
