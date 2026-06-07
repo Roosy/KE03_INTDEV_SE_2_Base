@@ -4,33 +4,97 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Klantgegevens</h1>
 
 <div>
-    <h4>Customer</h4>
+    <h4>#@Model.CustomerId.ToString("D5") </h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+
+        <dt class="col-sm-2">
+            E-mail
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Email)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Address)
+        <dt class="col-sm-2">
+            Voornaam
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            Achternaam
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            Adres
+        </dt>
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Address)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Active)
+        <dt class="col-sm-2">
+            Postcode
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Active)
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Postcode)
+        </dd>
+        <dt class="col-sm-2">
+            Stad
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.City)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id"
+       class="icon-btn edit-btn"
+       style="width: 150px;">
+        Aanpassen
+        <i class="bi bi-pencil-fill ms-2"></i>
+    </a>
 </div>
+
+
+<hr />
+
+
+<h3>Bestelgeschiedenis</h3>
+
+<div class="order-history-placeholder">
+
+    <i class="bi bi-receipt"></i>
+
+    <p>
+        Functionaliteit nog niet beschikbaar.
+    </p>
+
+    <small>
+        Bestellingen van deze klant zullen hier getoond worden.
+    </small>
+
+</div>
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">
+        Terug naar klantenlijst
+    </a>
+</div>
+
+
+@*<!--  Indien orders werkend zijn:
+    
+
+@if (Model.Orders.Any())
+{
+    // Show orders table
+}
+else
+{
+    // Show "No orders found"
+}
+
+-->*@
